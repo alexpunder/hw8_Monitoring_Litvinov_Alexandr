@@ -1,0 +1,16 @@
+services:
+  evidently:
+    image: python:3.10-slim
+    volumes:
+      - ./:/workspace
+    container_name: evidently
+    hostname: inside_evidently
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      USER: 1000
+      GROUP: 1000
+      DO_NOT_TRACK: 1
+    ports:
+      - 8090:8090
+    command: ['/bin/bash','-c','pip install evidently && evidently ui --port 8090 --host 0.0.0.0 --workspace ./workspace']
